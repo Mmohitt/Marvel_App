@@ -16,6 +16,11 @@ interface Dao {
     suspend fun insertAllCharacters(character: List<Character>)
 
     @Query("SELECT * from Character")
-    suspend fun getAllCharacters():List<Character>
+    suspend fun getAllCharacters(): List<Character>
 
+    @Query("UPDATE CHARACTER set visitCount = :count WHERE id=:characterId")
+    suspend fun updateCount(count: Int, characterId: Int): Int
+
+    @Query("SELECT visitCount FROM Character where id=:characterId")
+    suspend fun getCount(characterId: Int): Int
 }

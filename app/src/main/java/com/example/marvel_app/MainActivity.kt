@@ -16,11 +16,16 @@ import com.example.marvel_app.Retrofit.RetrofitHelper
 import com.example.marvel_app.ViewModel.MainViewModel
 import com.example.marvel_app.ViewModel.MainViewModelFactory
 import com.example.marvel_app.databinding.ActivityMainBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityMainBinding
     lateinit var mainViewModel: MainViewModel
+
+    private val mainActivityScope = CoroutineScope(Dispatchers.Main)
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -34,7 +39,10 @@ class MainActivity : AppCompatActivity() {
         mainViewModel.characters.observe(this, Observer {
             loadData(it)
         })
-        mainViewModel.getCharacters()
+        mainActivityScope.launch {
+            // Call getCharacters() within the coroutine block
+            mainViewModel.getCharacters()
+        }
     }
 
     private fun loadData(list: List<Character>) {
@@ -42,9 +50,14 @@ class MainActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(this@MainActivity)
             adapter = CharacterAdapter(list) { character ->
                 // Handle item click here and navigate to CharacterDetailActivity
+                updateVisitCount(character)
                 navigateToCharacterDetailActivity(character)
             }
         }
+    }
+
+    private fun updateVisitCount(character: Character){
+        mainViewModel.updateCount(character)
     }
 
     private fun navigateToCharacterDetailActivity(character: Character) {

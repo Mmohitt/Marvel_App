@@ -1,14 +1,14 @@
 package com.example.marvel_app
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.marvel_app.Retrofit.Character
+import com.squareup.picasso.Picasso
 
 class CharacterAdapter(private val list: List<Character>, private val onItemClick: (Character) -> Unit) :
     RecyclerView.Adapter<CharacterAdapter.CharacterViewHolder>() {
@@ -36,10 +36,9 @@ class CharacterAdapter(private val list: List<Character>, private val onItemClic
 
     override fun onBindViewHolder(holder: CharacterViewHolder, position: Int) {
         holder.text.text = list[position].name
-        Glide.with(holder.itemView.context)
+        Picasso.get()
             .load(list[position].thumbnail)
-            .diskCacheStrategy(DiskCacheStrategy.NONE)
-            .skipMemoryCache(true)
             .into(holder.image)
+
     }
 }
