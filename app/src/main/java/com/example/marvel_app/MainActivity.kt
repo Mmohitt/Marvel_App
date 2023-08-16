@@ -1,20 +1,20 @@
 package com.example.marvel_app
 
+import com.example.marvel_app.ViewModel.MainViewModelFactory
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.marvel_app.Adapter.CharacterAdapter
 import com.example.marvel_app.Database.Database
 import com.example.marvel_app.Repository.Repository
 import com.example.marvel_app.Retrofit.Api_Marvel
 import com.example.marvel_app.Retrofit.Character
 import com.example.marvel_app.Retrofit.RetrofitHelper
 import com.example.marvel_app.ViewModel.MainViewModel
-import com.example.marvel_app.ViewModel.MainViewModelFactory
 import com.example.marvel_app.databinding.ActivityMainBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -39,6 +39,10 @@ class MainActivity : AppCompatActivity() {
         mainViewModel.characters.observe(this, Observer {
             loadData(it)
         })
+    }
+
+    override fun onResume() {
+        super.onResume()
         mainActivityScope.launch {
             // Call getCharacters() within the coroutine block
             mainViewModel.getCharacters()
@@ -56,7 +60,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateVisitCount(character: Character){
+    private fun updateVisitCount(character: Character) {
         mainViewModel.updateCount(character)
     }
 

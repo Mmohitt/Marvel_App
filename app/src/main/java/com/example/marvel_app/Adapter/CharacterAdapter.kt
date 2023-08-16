@@ -1,12 +1,12 @@
-package com.example.marvel_app
+package com.example.marvel_app.Adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.marvel_app.R
 import com.example.marvel_app.Retrofit.Character
 import com.squareup.picasso.Picasso
 

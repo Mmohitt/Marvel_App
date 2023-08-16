@@ -9,13 +9,12 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.marvel_app.databinding.FragmentCharacterDetailsBinding
 
 class CharacterDetailActivity : AppCompatActivity() {
-    lateinit var binding: FragmentCharacterDetailsBinding
     var characterName: String = ""
     var characterDescription: String = ""
     var imageUrl: String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.fragment_character_details)
+        val binding : FragmentCharacterDetailsBinding = DataBindingUtil.setContentView(this, R.layout.fragment_character_details)
 
         characterName = intent.getStringExtra("name") ?: ""
         characterDescription = intent.getStringExtra("description") ?: ""

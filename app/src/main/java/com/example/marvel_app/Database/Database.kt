@@ -14,14 +14,12 @@ abstract class Database : RoomDatabase() {
         fun getDatabase(context: Context): Database {
             if (database == null) {
                 synchronized(Database::class.java) {
-                    if (database == null) {
                         database = Room.databaseBuilder(
                             context.applicationContext,
                             Database::class.java,
                             "marvel_database" // Name of the database file
                         )
                             .build()
-                    }
                 }
             }
             return database!!
