@@ -21,33 +21,5 @@ class Constants {
             1, md.digest(input.toByteArray())
         ).toString(16).padStart(32, '0')
 
-        fun getRequiredData(characters: Characters?): List<Character> {
-            return mutableListOf<Character>().apply {
-                characters?.data?.results?.forEach {
-                    add(
-                        Character(
-                            id = it.id,
-                            name = it.name,
-                            description = it.description.ifEmpty {
-                                "Description not provied by author..."
-                            },
-                            thumbnail = convertHttpToHttps(
-                                it.thumbnail.path ?: ""
-                            ) + "/" + "portrait_xlarge" + "." + it.thumbnail.extension
-                        )
-                    )
-
-                }
-            }
-        }
-
-        fun convertHttpToHttps(url: String): String {
-            return if (url.startsWith("http://")) {
-                "https://" + url.substring(7)
-            } else {
-                url
-            }
-        }
-
     }
 }

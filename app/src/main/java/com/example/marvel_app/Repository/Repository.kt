@@ -3,10 +3,10 @@ package com.example.marvel_app.Repository
 import com.example.marvel_app.Database.Database
 import com.example.marvel_app.Retrofit.Api_Marvel
 import com.example.marvel_app.Retrofit.Character
+import com.example.marvel_app.Retrofit.Characters
 import com.example.marvel_app.Util.Constants.Companion.API_KEY
 import com.example.marvel_app.Util.Constants.Companion.HASH
 import com.example.marvel_app.Util.Constants.Companion.TIMESTAMP
-import com.example.marvel_app.Util.Constants.Companion.getRequiredData
 
 class Repository(private val apiMarvel: Api_Marvel, private val database: Database) {
 
@@ -32,4 +32,33 @@ class Repository(private val apiMarvel: Api_Marvel, private val database: Databa
 
     suspend fun getCount(characterid:Int) =
         database.dao().getCount(characterid)
+
+
+    fun getRequiredData(characters: Characters?): List<Character> {
+        return mutableListOf<Character>().apply {
+            characters?.data?.results?.forEach {
+                add(
+                    Character(
+                        id = it.id,
+                        name = it.name,
+                        description = it.description.ifEmpty {
+                            "Description not provied by author..."
+                        },
+                        thumbnail = convertHttpToHttps(
+                            it.thumbnail.path ?: ""
+                        ) + "/" + "portrait_xlarge" + "." + it.thumbnail.extension
+                    )
+                )
+
+            }
+        }
+    }
+
+    fun convertHttpToHttps(url: String): String {
+        return if (url.startsWith("http://")) {
+            "https://" + url.substring(7)
+        } else {
+            url
+        }
+    }
 }
