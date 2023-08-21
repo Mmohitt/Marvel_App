@@ -44,7 +44,6 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         mainActivityScope.launch {
-            // Call getCharacters() within the coroutine block
             mainViewModel.getCharacters()
         }
     }
@@ -53,7 +52,6 @@ class MainActivity : AppCompatActivity() {
         binding.CharactersList.apply {
             layoutManager = LinearLayoutManager(this@MainActivity)
             adapter = CharacterAdapter(list) { character ->
-                // Handle item click here and navigate to CharacterDetailActivity
                 updateVisitCount(character)
                 navigateToCharacterDetailActivity(character)
             }
