@@ -23,6 +23,19 @@ API Key Setup: Replace YOUR_MARVEL_API_KEY with your actual Marvel API key in th
 
 Build and Run: Open the project in Android Studio and build it. Run the app on an emulator or a physical device.
 
+Images:
+images for where to fetch the api 
+<img src= https://github.com/Mo-hi-t/Marvel_App/blob/master/raw/main/images/Screenshot%20(32).png alt= "" width= "600" height= "300"><br><br>
+<img src=https://github.com/Mo-hi-t/Marvel_App/blob/master/raw/main/images/Screenshot%20(33).png alt= "" width= "600" height= "300"><br><br>
+<img src=https://github.com/Mo-hi-t/Marvel_App/blob/master/raw/main/images/Screenshot%20(34).png alt= "" width= "600" height= "300"><br><br>
+
+images for flow of App
+
+<img src=https://github.com/Mo-hi-t/Marvel_App/blob/master/raw/main/images/WhatsApp%20Image%202023-08-19%20at%2014.23.43.jpeg alt= "" width= "300" height= "600"><br><br>
+<img src=https://github.com/Mo-hi-t/Marvel_App/blob/master/raw/main/images/WhatsApp%20Image%202023-08-19%20at%2014.23.43%20(1).jpeg alt= "" width= "300" height= "600"><br><br>
+<img src=https://github.com/Mo-hi-t/Marvel_App/blob/master/raw/main/images/WhatsApp%20Image%202023-08-19%20at%2014.23.43%20(2).jpeg alt= "" width= "300" height= "600"><br><br>
+
+
 Architecture
 The Marvel Character App is built using Kotlin and follows the MVVM (Model-View-ViewModel) architecture pattern. The key components of the architecture are:
 
