@@ -30,9 +30,17 @@ class MainActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        val apiMarvel = RetrofitHelper.getRetrofitInstance().create(Api_Marvel::class.java)
-        val database = Database.getDatabase(applicationContext)
-        val repository = Repository(apiMarvel, database)
+         val apiMarvel by lazy {
+            RetrofitHelper.getRetrofitInstance().create(Api_Marvel::class.java)
+        }
+
+         val database by lazy {
+            Database.getDatabase(applicationContext)
+        }
+
+       val repository by lazy {
+            Repository(apiMarvel, database)
+        }
         mainViewModel =
             ViewModelProvider(this, MainViewModelFactory(repository)).get(MainViewModel::class.java)
 
