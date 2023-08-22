@@ -1,5 +1,7 @@
 package com.example.marvel_app.Repository
 
+import InternetConnectivityChecker
+import android.widget.Toast
 import com.example.marvel_app.Database.Database
 import com.example.marvel_app.Retrofit.Api_Marvel
 import com.example.marvel_app.Retrofit.Character
@@ -11,30 +13,25 @@ import com.example.marvel_app.Util.Constants.Companion.TIMESTAMP
 class Repository(private val apiMarvel: Api_Marvel, private val database: Database) {
 
 
-    suspend fun getCharacters(): List<Character>? {
+    suspend fun getMoviesCharacterFromServer(): List<Character>? {
         var myResult: MutableList<Character> = mutableListOf()
-        // Check if data is available in the database
-        val cachedCharacters = database.dao().getAllCharacters()
-        if (cachedCharacters.isEmpty()) {
-            // If no data in the database, make the API call
-            val result = apiMarvel.getData(API_KEY, TIMESTAMP , HASH)
-            getRequiredData(result.body()).let {
-                myResult.addAll(it)
-            }
-            database.dao().insertAllCharacters(myResult)
-            return myResult
+
+        val result = apiMarvel.getData(API_KEY, TIMESTAMP, HASH)
+        getRequiredData(result.body()).let {
+            myResult.addAll(it)
         }
-        return cachedCharacters
+        database.dao().insertAllCharacters(myResult)
+        return myResult
     }
 
-     suspend fun updateCount(count:Int,characterId:Int):Int =
-        database.dao().updateCount(count,characterId)
+    suspend fun getMoviesCharactersFromDB(): List<Character>? {
+        return database.dao().getAllCharacters()
+    }
 
-    suspend fun getCount(characterid:Int) =
-        database.dao().getCount(characterid)
+    suspend fun updateCount(count: Int, characterId: Int): Int =
+        database.dao().updateCount(count, characterId)
 
-
-    fun getRequiredData(characters: Characters?): List<Character> {
+    private fun getRequiredData(characters: Characters?): List<Character> {
         return mutableListOf<Character>().apply {
             characters?.data?.results?.forEach {
                 add(
@@ -46,7 +43,7 @@ class Repository(private val apiMarvel: Api_Marvel, private val database: Databa
                         },
                         thumbnail = convertHttpToHttps(
                             it.thumbnail.path ?: ""
-                        ) + "/" + "portrait_xlarge" + "." + it.thumbnail.extension
+                        ) + "/" + "landscape_large" + "." + it.thumbnail.extension
                     )
                 )
 
@@ -54,7 +51,7 @@ class Repository(private val apiMarvel: Api_Marvel, private val database: Databa
         }
     }
 
-    fun convertHttpToHttps(url: String): String {
+    private fun convertHttpToHttps(url: String): String {
         return if (url.startsWith("http://")) {
             "https://" + url.substring(7)
         } else {

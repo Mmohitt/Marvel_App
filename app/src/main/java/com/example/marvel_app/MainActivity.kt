@@ -1,12 +1,16 @@
 package com.example.marvel_app
 
+import InternetConnectivityChecker
 import com.example.marvel_app.ViewModel.MainViewModelFactory
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.marvel_app.Adapter.CharacterAdapter
 import com.example.marvel_app.Database.Database
@@ -25,35 +29,34 @@ class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     lateinit var mainViewModel: MainViewModel
 
-    private val mainActivityScope = CoroutineScope(Dispatchers.Main)
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-         val apiMarvel by lazy {
+
+        val apiMarvel by lazy {
             RetrofitHelper.getRetrofitInstance().create(Api_Marvel::class.java)
         }
 
-         val database by lazy {
+        val database by lazy {
             Database.getDatabase(applicationContext)
         }
 
-       val repository by lazy {
+        val repository by lazy {
             Repository(apiMarvel, database)
         }
         mainViewModel =
             ViewModelProvider(this, MainViewModelFactory(repository)).get(MainViewModel::class.java)
 
-        mainViewModel.characters.observe(this, Observer {
-            loadData(it)
-        })
-    }
+        mainViewModel.loadCharacter()
 
-    override fun onResume() {
-        super.onResume()
-        mainActivityScope.launch {
-            mainViewModel.getCharacters()
+        mainViewModel.characters.observe(this) { charactersList ->
+            loadData(charactersList)
         }
+
+//        mainViewModel.error.observe(this){
+//
+//        }
     }
 
     private fun loadData(list: List<Character>) {

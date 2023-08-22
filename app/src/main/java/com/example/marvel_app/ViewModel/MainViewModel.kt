@@ -13,13 +13,25 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
 
     val characters: MutableLiveData<List<Character>> = MutableLiveData()
 
-    fun getCharacters() {
+    val error: MutableLiveData<Unit> = MutableLiveData()
+
+    fun loadCharacter() {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.getCharacters()?.let {
-                characters.postValue(it)
+            repository.getMoviesCharactersFromDB()?.let { charactersList ->
+                if (charactersList.isNotEmpty()) {
+                    characters.postValue(charactersList)
+                } else {
+                    repository.getMoviesCharacterFromServer()?.let { charactersList ->
+                        characters.postValue(charactersList)
+                    }
+                }
             }
         }
     }
+
+//    private fun isInternetAvailable(): Boolean {
+//
+//    }
 
     fun updateCount(character: Character) {
         viewModelScope.launch(Dispatchers.IO) {
