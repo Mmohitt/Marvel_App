@@ -48,15 +48,16 @@ class MainActivity : AppCompatActivity() {
         mainViewModel =
             ViewModelProvider(this, MainViewModelFactory(repository)).get(MainViewModel::class.java)
 
-        mainViewModel.loadCharacter()
+        mainViewModel.loadCharacter(applicationContext)
 
         mainViewModel.characters.observe(this) { charactersList ->
             loadData(charactersList)
         }
 
-//        mainViewModel.error.observe(this){
-//
-//        }
+        mainViewModel.error.observe(this){
+            Toast.makeText(applicationContext, "No internet connection", Toast.LENGTH_SHORT).show()
+        }
+
     }
 
     private fun loadData(list: List<Character>) {
