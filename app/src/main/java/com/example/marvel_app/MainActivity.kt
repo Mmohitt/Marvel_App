@@ -1,6 +1,5 @@
 package com.example.marvel_app
 
-import InternetConnectivityChecker
 import com.example.marvel_app.ViewModel.MainViewModelFactory
 import android.content.Intent
 import android.os.Bundle

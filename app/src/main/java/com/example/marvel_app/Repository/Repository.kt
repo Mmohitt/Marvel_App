@@ -1,7 +1,5 @@
 package com.example.marvel_app.Repository
 
-import InternetConnectivityChecker
-import android.widget.Toast
 import com.example.marvel_app.Database.Database
 import com.example.marvel_app.Retrofit.Api_Marvel
 import com.example.marvel_app.Retrofit.Character
