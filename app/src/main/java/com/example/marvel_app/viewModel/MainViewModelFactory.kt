@@ -1,4 +1,4 @@
-package com.example.marvel_app.ViewModel
+package com.example.marvel_app.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

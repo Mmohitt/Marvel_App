@@ -1,4 +1,4 @@
-package com.example.marvel_app.ViewModel
+package com.example.marvel_app.viewModel
 
 import android.content.Context
 import android.net.ConnectivityManager
@@ -45,7 +45,7 @@ class MainViewModel(
                             }
                         }
                         catch (e: Exception){
-
+                            Log.e("NetworkRequest", e.message.toString())
                         }
 
                     } else {
@@ -64,7 +64,7 @@ class MainViewModel(
                         id = it.id,
                         name = it.name,
                         description = it.description.ifEmpty {
-                            "Description not provied by author..."
+                            "Description not provided by author..."
                         },
                         thumbnail = convertHttpToHttps(
                             it.thumbnail.path ?: ""

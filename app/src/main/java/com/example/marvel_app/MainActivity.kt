@@ -1,6 +1,6 @@
 package com.example.marvel_app
 
-import com.example.marvel_app.ViewModel.MainViewModelFactory
+import com.example.marvel_app.viewModel.MainViewModelFactory
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -14,7 +14,7 @@ import com.example.marvel_app.Repository.Repository
 import com.example.marvel_app.Retrofit.Api_Marvel
 import com.example.marvel_app.Retrofit.Character
 import com.example.marvel_app.Retrofit.RetrofitHelper
-import com.example.marvel_app.ViewModel.MainViewModel
+import com.example.marvel_app.viewModel.MainViewModel
 import com.example.marvel_app.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
