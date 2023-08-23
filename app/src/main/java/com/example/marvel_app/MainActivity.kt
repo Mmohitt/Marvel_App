@@ -3,13 +3,10 @@ package com.example.marvel_app
 import com.example.marvel_app.ViewModel.MainViewModelFactory
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.marvel_app.Adapter.CharacterAdapter
 import com.example.marvel_app.Database.Database
@@ -19,9 +16,6 @@ import com.example.marvel_app.Retrofit.Character
 import com.example.marvel_app.Retrofit.RetrofitHelper
 import com.example.marvel_app.ViewModel.MainViewModel
 import com.example.marvel_app.databinding.ActivityMainBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -45,7 +39,7 @@ class MainActivity : AppCompatActivity() {
             Repository(apiMarvel, database)
         }
         mainViewModel =
-            ViewModelProvider(this, MainViewModelFactory(repository)).get(MainViewModel::class.java)
+            ViewModelProvider(this, MainViewModelFactory(repository,database)).get(MainViewModel::class.java)
 
         mainViewModel.loadCharacter(applicationContext)
 
@@ -53,8 +47,11 @@ class MainActivity : AppCompatActivity() {
             loadData(charactersList)
         }
 
-        mainViewModel.error.observe(this){
+        mainViewModel.errorForInternet.observe(this){
             Toast.makeText(applicationContext, "No internet connection", Toast.LENGTH_SHORT).show()
+        }
+        mainViewModel.errorForResponse.observe(this){
+            Toast.makeText(applicationContext, "Response error from server", Toast.LENGTH_LONG).show()
         }
 
     }
