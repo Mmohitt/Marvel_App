@@ -27,7 +27,6 @@ class MainViewModel(
             repository.getMoviesCharactersFromDB()?.let { characterList ->
                 if (characterList.isNotEmpty()) {
                     characters.postValue(characterList)
-                    Log.d("ViewModelAA","From DB")
                 } else {
                     if (isInternetAvailable(context)) {
                         try{
@@ -71,7 +70,6 @@ class MainViewModel(
                         ) + "/" + "landscape_large" + "." + it.thumbnail.extension
                     )
                 )
-
             }
         }
     }
